@@ -1,0 +1,6 @@
+<p> Patients </p>
+<ul>
+{% for patient in ps %}
+  <li><a href="/questionnaire/{{ patient.subject_code }}"> {{ patient }}</a></li>
+{% endfor %}
+</ul>
