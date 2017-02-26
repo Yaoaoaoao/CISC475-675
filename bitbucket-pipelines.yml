@@ -9,4 +9,4 @@ pipelines:
   default:
     - step:
         script: # Modify the commands below to build your repository.
-          - python3.4 manage.py test questionnaire
+          - python manage.py test questionnaire
