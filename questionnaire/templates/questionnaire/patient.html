@@ -1,10 +1,10 @@
 <p> Patient {{ patient.subject_code }} </p>
 <table>
  {% for q, answers in data.items %}
-   <tr> <td>{{q.date}}</td> </tr>
+   <tr> <td></td><td>Questionnaire {{q.date}}</td> </tr>
    {% for answer in answers %}
   <tr>
-      <td>Question: {{ answer.question}}</td><td> Answer: {{answer.answer_text}}</td>
+      <td></td><td>Question: {{ answer.question}}</td><td> Answer: {{answer.answer_text}}</td>
   </tr>
   {% endfor %}
 {% endfor %}
