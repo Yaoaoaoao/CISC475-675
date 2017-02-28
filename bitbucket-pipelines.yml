@@ -10,4 +10,4 @@ pipelines:
     - step:
         script: # Modify the commands below to build your repository.
           - pip install django
-          - python manage.py test questionnaire
+          - python django/manage.py test questionnaire
