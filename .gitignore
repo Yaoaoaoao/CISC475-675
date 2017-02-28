@@ -1,4 +1,3 @@
 *.pyc
 
 .idea
-bitbucket-pipelines.yml
