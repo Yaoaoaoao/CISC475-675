@@ -31,13 +31,13 @@ ALLOWED_HOSTS = ["huoenter.com", "127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
-    'questionnaire.apps.QuestionnaireConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'questionnaire', 
 ]
 
 MIDDLEWARE = [
