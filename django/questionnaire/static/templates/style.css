@@ -1,0 +1,53 @@
+body {
+    padding: 20px;
+}
+
+.question-label
+{
+    font-family: 'Roboto', sans-serif;
+    font-size: 18pt;
+    font-weight: 200;
+    color: #333;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: block;
+    clear: both;
+}
+
+.one-question-domain
+{
+  background-color: #f1f1f1;
+  border-radius: 4px;
+  padding-top: 0.3em;
+}
+
+.not-great
+{
+  font-size: .8em;
+  float: left;
+  margin-left: 0.1em;
+}
+
+.outstanding
+{
+  font-size: .8em;
+  float: right;
+  margin-right: 0.1em;
+}
+
+.btn-panel
+{
+    padding: 0;
+}
+
+.btn-padding
+{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+#buttonAfterClick
+{
+	background-color: #0275d8;
+	color: white;
+}
