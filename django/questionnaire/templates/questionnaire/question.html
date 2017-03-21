@@ -12,12 +12,15 @@
 </head>
 <body>
 
-<br>Questionnaire1
+{{questionnaire.id}}
+<h1>{{questionnaire.title}}
+<small>{{questionnaire.description}}</small>
+</h1>
 <hr>
 
 <form>
     <div class = "container-fluid">
-    	{% for question in questionnaire %}
+    	{% for question in questions %}
     		{% if question.type == 'SC' %}
 		        <div class = "row">
 		            <label class = "question-label">{{question.question_text}}</label>
