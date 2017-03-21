@@ -5,7 +5,7 @@ body {
 .question-label
 {
     font-family: 'Roboto', sans-serif;
-    font-size: 18pt;
+    font-size: 15pt;
     font-weight: 200;
     color: #333;
     margin-top: 1em;
@@ -23,16 +23,18 @@ body {
 
 .not-great
 {
-  font-size: .8em;
-  float: left;
-  margin-left: 0.1em;
+    color: #B71C1C;
+    font-size: .8em;
+    float: left;
+    margin-left: 0.05em;
 }
 
 .outstanding
 {
-  font-size: .8em;
-  float: right;
-  margin-right: 0.1em;
+    color: #00796B;
+    font-size: .8em;
+    float: right;
+    margin-right: 0.05em;
 }
 
 
