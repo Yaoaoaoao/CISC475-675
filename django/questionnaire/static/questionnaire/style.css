@@ -38,7 +38,7 @@ body {
     white-space: normal;
 }
 
-#buttonAfterClick {
-    background-color: #0275d8;
-    color: white;
+.buttonClicked {
+    background-color: #0275d8 !important;
+    color: white !important;
 }

@@ -1,26 +1,10 @@
 $(document).ready(function () {
-    function afterClick(index) {
-        for (var i = 0; i < buttons.length; i++) {
-            if (i == index) {
-                buttons[i].id = "buttonAfterClick";
-                var question_id = buttons[i].getAttribute("name");
-            }
-        }
-        for (var i = 0; i < buttons.length; i++) {
-            if (i !== index && buttons[i].name == question_id) {
-                buttons[i].removeAttribute("id");
-            }
-        }
-    }
-
-    var buttons = $("button");
-    for (var i = 0; i < buttons.length; i++) {
-        var j = i;
-        buttons[j].addEventListener("click", function () {
-            afterClick(j);
-        }, false);
-    }
-
+    // Button Group: keep the clicked button highlight. 
+    $('button').on('click', function () {
+        var btnGroupName = $(this).prop('name');
+        $('button[name=' + btnGroupName + ']').removeClass('buttonClicked');
+        $(this).addClass('buttonClicked');
+    });
 
     // FOR Questionnaire 1 (VISA-A) question 8
     var q8_sub_questions = ['#1-9', '#1-10', '#1-11'];
