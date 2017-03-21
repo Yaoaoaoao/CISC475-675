@@ -10,7 +10,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,300i,400"
           rel="stylesheet">
-    
+
     <link href="{% static 'questionnaire/style.css' %}" rel="stylesheet"
           type="text/css">
     <meta name="viewport"
@@ -51,10 +51,12 @@
             {% else %}
             <div>
                 {% for option in question.options%}
-                <input type="radio"
-                       name={{option.question.id}}
-                       value={{option.option_order}}>
-                {{option.option_text}} <br>
+                <div class="radio">
+                    <label><input type="radio"
+                                  name={{option.question.id}}
+                                  value={{option.option_order}}>
+                        {{option.option_text}}</label>
+                </div>
                 {% endfor %}
             </div>
             {% endif %}
