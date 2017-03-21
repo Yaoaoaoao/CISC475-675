@@ -2,8 +2,7 @@ body {
     padding: 20px;
 }
 
-.question-label
-{
+.question-label {
     font-family: 'Roboto', sans-serif;
     font-size: 15pt;
     font-weight: 200;
@@ -14,27 +13,24 @@ body {
     clear: both;
 }
 
-.one-question-domain
-{
-  background-color: #f1f1f1;
-  border-radius: 4px;
-  padding-top: 0.3em;
+.one-question-domain {
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    padding-top: 0.3em;
 }
 
-.one-question-domain-left
-{
+.one-question-domain-left {
     color: #B71C1C;
     font-size: .8em;
     float: left;
-    margin-left: 0.05em;
+    margin-left: .5em;
 }
 
-.one-question-domain-right
-{
+.one-question-domain-right {
     color: #00796B;
     font-size: .8em;
     float: right;
-    margin-right: 0.05em;
+    margin-right: .5em;
 }
 
 .btn {
@@ -42,8 +38,7 @@ body {
     white-space: normal;
 }
 
-#buttonAfterClick
-{
-	background-color: #0275d8;
-	color: white;
+#buttonAfterClick {
+    background-color: #0275d8;
+    color: white;
 }
