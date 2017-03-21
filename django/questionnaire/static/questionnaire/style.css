@@ -37,6 +37,10 @@ body {
     margin-right: 0.05em;
 }
 
+.btn {
+    padding: 6px 0px;
+    white-space: normal;
+}
 
 #buttonAfterClick
 {
