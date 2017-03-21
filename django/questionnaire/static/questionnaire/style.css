@@ -9,7 +9,7 @@ body {
     font-weight: 200;
     color: #333;
     margin-top: 1em;
-    margin-bottom: 1em;
+    /*margin-bottom: 1em;*/
     display: block;
     clear: both;
 }
@@ -35,16 +35,6 @@ body {
   margin-right: 0.1em;
 }
 
-.btn-panel
-{
-    padding: 0;
-}
-
-.btn-padding
-{
-  padding-left: 0;
-  padding-right: 0;
-}
 
 #buttonAfterClick
 {
