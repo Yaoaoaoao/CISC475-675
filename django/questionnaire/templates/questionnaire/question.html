@@ -12,16 +12,6 @@
 </head>
 <body>
 
-{% for question in questionnaire %}
-	{{question.type}}
-	{{question.order}}
-	{{question.question_text}}
-	{% for option in question.options %}
-		{{option.id}}
-	{% endfor %}
-	<br>
-{% endfor %}
-
 <br>Questionnaire1
 <hr>
 
@@ -49,7 +39,7 @@
 		    	<label class = "question-label">{{question.question_text}}</label>
 			    <div>
 			    	{% for option in question.options%}
-				        <input type="radio" name={{option.question}} value={{option.score}} checked>{{option.score}}<br>
+				        <input type="radio" name={{option.question}} value={{option.score}}>{{option.option_text}}<br>
 				    {% endfor %}
 			    </div>
 			{% endif %}
