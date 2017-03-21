@@ -35,7 +35,10 @@ class Question(models.Model):
                                      default='SINGLE')
 
     def __str__(self):
-        return str(self.id) + ". " + self.question_text
+        # return str(self.id) + ". " + self.question_text
+        return '[QN{}] Q{}. {}'.format(self.questionnaire.id,
+                                       self.question_order,
+                                       self.question_text)
 
     class Meta:
         managed = False
