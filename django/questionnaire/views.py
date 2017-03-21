@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from models import *
+from .models import *
+from django.db.models import Q
 
 
 def index(request):
@@ -8,18 +9,28 @@ def index(request):
 
 
 def questionView(request, qid):
-    questionnaire = Questionnaire.objects.get(id=qid)
+    context = {'questionnaire': None,
+               'questions': []}
+
+    context['questionnaire'] = Questionnaire.objects.get(id=qid)
+
     questions = Question.objects.filter(questionnaire__id=qid).order_by(
         'question_order')
-    context = {'questionnaire': questionnaire,
-               'questions': []}
     for question in questions:
-        qobj = {'order': question.id,
+        qobj = {'order': question.question_order,
                 'question_text': question.question_text,
                 'type': question.question_type,
                 'options': Option.objects.filter(
-                    question__id=question.id).order_by('option_order')
+                    Q(question__id=question.id) & Q(option_order__gt=0))
+                    .order_by('option_order'),
                 }
+
+        if qobj['type'] == 'SCALE':
+            # Option order == -1 is the left label.
+            # Option order == 0 is the right label. 
+            qobj['labels'] = Option.objects.filter(
+                Q(question__id=question.id) & Q(option_order__lte=0)
+            ).values_list('option_text', flat=True).order_by('option_order')
 
         context['questions'].append(qobj)
 

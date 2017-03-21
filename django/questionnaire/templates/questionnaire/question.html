@@ -19,21 +19,24 @@
 <body>
 
 
-<h2><center>{{questionnaire.title}}</center></h2>
-<h3><small>{{questionnaire.description}}</small></h3>
-
+<h2>
+    <center>{{questionnaire.title}}</center>
+</h2>
+<h3>
+    <small>{{questionnaire.description}}</small>
+</h3>
 <hr>
-
 <form>
     <div class="container-fluid">
         {% for question in questions %}
-        {% if question.type == 'SC' %}
+        {% if question.type == 'SCALE' %}
         <div class="row">
-            <label class="question-label">{{question.order}}.
-                {{question.question_text}}</label>
+            <label class="question-label">
+                {{question.order}}. {{question.question_text}}</label>
             <div class="one-question-domain">
-                <label class="not-great">Not great</label>
-                <label class="outstanding">Outstanding</label>
+                {{scale}}
+                <label class="one-question-domain-left">{{question.labels.0}}</label>
+                <label class="one-question-domain-right">{{question.labels.1}}</label>
                 <div class="btn-group btn-group-justified">
                     {% for option in question.options%}
                     <div class="btn-group" role="group">
@@ -46,7 +49,8 @@
             </div>
         </div>
         {% else %}
-        <label class="question-label">{{question.question_text}}</label>
+        <label class="question-label">
+            {{question.order}}. {{question.question_text}}</label>
         <div>
             {% for option in question.options%}
             <input type="radio" name={{option.question}} value={{option.score}}>
@@ -56,6 +60,8 @@
         {% endif %}
         {% endfor %}
     </div>
+    <hr>
+    <button type="submit" class="btn btn-success btn-block">Submit</button>
 </form>
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
         integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
