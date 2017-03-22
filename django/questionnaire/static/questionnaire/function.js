@@ -2,7 +2,7 @@ $(document).ready(function () {
     // Button Group: keep the clicked button highlight. 
     $('button').on('click', function () {
         var btnGroupName = $(this).prop('name');
-        $('button[name=' + btnGroupName + ']').removeClass('buttonClicked');
+        $('button[name="' + btnGroupName + '"]').removeClass('buttonClicked');
         $(this).addClass('buttonClicked');
     });
 

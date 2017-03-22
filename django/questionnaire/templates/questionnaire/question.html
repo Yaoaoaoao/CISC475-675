@@ -7,10 +7,8 @@
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
           crossorigin="anonymous">
-
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,300i,400"
           rel="stylesheet">
-
     <link href="{% static 'questionnaire/style.css' %}" rel="stylesheet"
           type="text/css">
     <meta name="viewport"
@@ -43,7 +41,7 @@
                     {% for option in question.options%}
                     <div class="btn-group" role="group">
                         <button type="button"
-                                name={{question.order}}
+                                name="{{question.order}}"
                                 class="btn btn-default">
                             {{option.option_text}}
                         </button>
@@ -56,8 +54,8 @@
                 {% for option in question.options%}
                 <div class="radio">
                     <label><input type="radio"
-                                  name={{option.question.id}}
-                                  value={{option.option_order}}>
+                                  name="{{option.question.id}}"
+                                  value="{{option.option_order}}">
                         {{option.option_text}}</label>
                 </div>
                 {% endfor %}
