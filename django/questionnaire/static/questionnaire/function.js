@@ -3,6 +3,7 @@ $(document).ready(function () {
     $('button').on('click', function () {
         var btnGroupName = $(this).prop('name');
         $('button[name="' + btnGroupName + '"]').removeClass('buttonClicked');
+        $('input[name="' + btnGroupName + '"]').val($(this).text().trim());
         $(this).addClass('buttonClicked');
     });
 

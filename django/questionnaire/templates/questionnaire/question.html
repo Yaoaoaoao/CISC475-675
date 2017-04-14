@@ -27,7 +27,7 @@
 </div>
 
 <hr>
-<form>
+<form action = "#">
     <div class="container-fluid">
         {% for question in questions %}
         <div id="{{questionnaire.id}}-{{question.order}}">
@@ -47,8 +47,9 @@
                         </button>
                     </div>
                     {% endfor %}
-                </div>
+                </div> 
             </div>
+            <input type = "hidden" value = "" name = "{{question.order}}">
             {% else %}
             <div>
                 {% for option in question.options%}
