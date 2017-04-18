@@ -78,7 +78,7 @@ class Answer(models.Model):
     note = models.TextField()
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
     class Meta:
         managed = False

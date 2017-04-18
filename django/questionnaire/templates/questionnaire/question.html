@@ -16,7 +16,7 @@
 </head>
 <body>
 
-
+<h2>Patient ID: {{patient_id}}</h2>
 <h2>
     <center>{{questionnaire.title}}</center>
 </h2>
@@ -27,7 +27,8 @@
 </div>
 
 <hr>
-<form action = "#">
+<form action = "{% url 'questionnaire:upload' qid=questionnaire.id patient_id=patient_id %}" method="post">
+    {% csrf_token %}
     <div class="container-fluid">
         {% for question in questions %}
         <div id="{{questionnaire.id}}-{{question.order}}">
@@ -42,7 +43,8 @@
                     <div class="btn-group" role="group">
                         <button type="button"
                                 name="{{question.order}}"
-                                class="btn btn-default">
+                                class="btn btn-default"
+                                patient_id="{{patient_id}}">
                             {{option.option_text}}
                         </button>
                     </div>
@@ -56,7 +58,8 @@
                 <div class="radio">
                     <label><input type="radio"
                                   name="{{option.question.id}}"
-                                  value="{{option.option_order}}">
+                                  value="{{option.option_order}}"
+                                  patient_id="{{patient_id}}">
                         {{option.option_text}}</label>
                 </div>
                 {% endfor %}
