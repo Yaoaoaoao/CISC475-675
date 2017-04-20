@@ -27,7 +27,7 @@
 </div>
 
 <hr>
-<form action = "{% url 'questionnaire:upload' qid=questionnaire.id patient_id=patient_id %}" method="post">
+<form action = "{% url 'questionnaire:submit' qid=questionnaire.id patient_id=patient_id %}" method="post">
     {% csrf_token %}
     <div class="container-fluid">
         {% for question in questions %}
