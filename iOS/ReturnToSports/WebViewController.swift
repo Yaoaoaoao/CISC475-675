@@ -24,16 +24,18 @@ class WebViewController: UIViewController, WKNavigationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let surveyUrl = [baseUrl, questionnaireId, "patient_id", patientId].joined(separator: "/") + "/"
-        let url = URL(string: surveyUrl)!
-        webView.load(URLRequest(url: url))
-        webView.allowsBackForwardNavigationGestures = true
-        
-        progressView = UIProgressView(frame: CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: 75))
-        webView.addSubview(progressView)
-        progressView.isHidden = false
-        
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        if let pid = patient?.id {
+            let surveyUrl = [baseUrl, questionnaireId, "patient_id", pid].joined(separator: "/") + "/"
+            let url = URL(string: surveyUrl)!
+            webView.load(URLRequest(url: url))
+            webView.allowsBackForwardNavigationGestures = true
+            
+            progressView = UIProgressView(frame: CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: 75))
+            webView.addSubview(progressView)
+            progressView.isHidden = false
+            
+            webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
+        }
     }
     
     deinit { webView.removeObserver(self, forKeyPath: "estimatedProgress") }

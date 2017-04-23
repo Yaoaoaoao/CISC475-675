@@ -7,17 +7,31 @@
 //
 
 import UIKit
+import os.log
 
-var patientId: String = "";
-var questionnaireId: String = "2";
+var patient: Patient?
+var questionnaireId: String = "2"
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate {
     // MARK: Properties:
     @IBOutlet weak var patientIdTextField: UITextField!
     @IBOutlet weak var surveyButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        patientIdTextField.delegate = self
+        
+        // Load any saved patient.
+        if let savedPatient = loadPatient() {
+            os_log("Patient loaded.", log: OSLog.default, type: .debug)
+            patientIdTextField.text = savedPatient.id
+            patient = savedPatient
+        }
+        else {
+            patientIdTextField.text = ""
+        }
+        
         checkPatientId()
     }
     
@@ -41,16 +55,41 @@ class ViewController: UIViewController {
     @IBAction func patientIdChange(_ sender: UITextField) {
         checkPatientId()
     }
+    
+    @IBAction func patientIdChangeDone(_ sender: UITextField) {
+        savePatient()
+    }
 
+    @IBAction func textFieldPrimaryActionTriggered(_ sender: Any) {
+        checkPatientId()
+        savePatient()
+    }
+    
     func checkPatientId() {
         if let id = patientIdTextField.text, !id.isEmpty {
             // print("patient id is entered")
             surveyButton.isEnabled = true
-            patientId = id
+            // Create a new Pateint
+            patient = Patient(id)
         }
         else {
             // print("patient id is empty")
             surveyButton.isEnabled = false
+            patient = Patient("")
         }
+    }
+    
+    // MARK: Private Methods
+    private func savePatient() {
+        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(patient!, toFile: Patient.ArchiveURL.path)
+            if isSuccessfulSave {
+                os_log("Patient successfully saved.", log: OSLog.default, type: .debug)
+            } else {
+                os_log("Failed to save patient...", log: OSLog.default, type: .error)
+            }
+    }
+    
+    private func loadPatient() -> Patient?  {
+        return NSKeyedUnarchiver.unarchiveObject(withFile: Patient.ArchiveURL.path) as? Patient
     }
 }
