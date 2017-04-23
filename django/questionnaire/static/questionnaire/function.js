@@ -5,6 +5,8 @@ $(document).ready(function () {
         $('button[name="' + btnGroupName + '"]').removeClass('buttonClicked');
         $('input[name="' + btnGroupName + '"]').val($(this).text().trim());
         $(this).addClass('buttonClicked');
+        $('#progress-' + btnGroupName).removeClass('btn-default-color');
+        $('#progress-' + btnGroupName).addClass('btn-success');
     });
 
     // FOR Questionnaire 1 (VISA-A) question 8
@@ -33,7 +35,18 @@ $(document).ready(function () {
     // Set Question 8 events. 
     $("#1-8").find('input[type="radio"]').on('change', function () {
         var option = $(this).val();
+
         var showquestion = parseInt(option) - 1;
         display_subquestion(q8_sub_questions, q8_sub_questions[showquestion]);
+    })
+
+    $('input[type = "radio"]').on('click', function(){
+        var radioName = $(this).attr('order');
+        if (parseInt(radioName) >9)
+        {
+            radioName = '9';
+        }
+        $('#progress-' + radioName).removeClass('btn-default-color');
+        $('#progress-' + radioName).addClass('btn-success');
     })
 });

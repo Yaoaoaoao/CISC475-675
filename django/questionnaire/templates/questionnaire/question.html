@@ -26,6 +26,18 @@
 	</h3>
 </div>
 
+<nav class="navbar-fixed-top survey-progress-bar">
+	<div class="survey-progress-bar-div">
+		<div class = "btn-group btn-group-justified">
+			{% for question in questions %}
+				{% if question.order < 10 %}
+					<a href="#question-{{question.order}}" id = "progress-{{question.order}}" class="btn btn-default-color btn-nav" role = "button">{{question.order}}</a>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+</nav>
+
 <hr>
 <form action = "{% url 'questionnaire:submit' qid=questionnaire.id patient_id=patient_id %}" method="post">
     {% csrf_token %}
@@ -33,7 +45,7 @@
         {% for question in questions %}
         <div id="{{questionnaire.id}}-{{question.order}}">
             <label class="question-label">
-                <span class="question_id">{{question.order}}. </span>{{question.question_text}}</label>
+                <a id = "question-{{question.order}}"><span class="question_id">{{question.order}}. </span></a>{{question.question_text}}</label>
             {% if question.type == 'SCALE' %}
             <div class="one-question-domain">
                 <label class="one-question-domain-left">{{question.labels.0}}</label>
@@ -58,6 +70,7 @@
                 <div class="radio">
                     <label><input type="radio"
                                   name="{{option.question.id}}"
+								  order="{{question.order}}"
                                   value="{{option.option_order}}"
                                   patient_id="{{patient_id}}">
                         {{option.option_text}}</label>

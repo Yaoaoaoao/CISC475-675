@@ -48,3 +48,26 @@ body {
     padding-right: 0.5em;
     border-left: solid #01579B;
 }
+
+.btn-nav
+{
+    padding-top: 0;
+    padding-bottom: 0;
+    border: 0;
+}
+
+.btn-default-color
+{
+     background-color: #ddd; 
+}
+
+.survey-progress-bar
+{
+    background-color: white;
+    border-bottom: 2px solid #c2c2c2;
+}
+
+.survey-progress-bar-div
+{
+    margin: 10px 30px 10px 30px;
+}
