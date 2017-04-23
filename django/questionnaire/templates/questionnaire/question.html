@@ -44,8 +44,9 @@
     <div class="container-fluid">
         {% for question in questions %}
         <div id="{{questionnaire.id}}-{{question.order}}">
-            <label class="question-label">
-                <a id = "question-{{question.order}}"><span class="question_id">{{question.order}}. </span></a>{{question.question_text}}</label>
+            <span id = "question-{{question.order}}">
+            	<label class="question-label">
+                	<span class="question_id">{{question.order}}. </span>{{question.question_text}}</label></span>
             {% if question.type == 'SCALE' %}
             <div class="one-question-domain">
                 <label class="one-question-domain-left">{{question.labels.0}}</label>

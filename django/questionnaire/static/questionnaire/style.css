@@ -1,5 +1,6 @@
 body {
     padding: 20px;
+    padding-top: 40px;
 }
 
 .question-label {
@@ -54,6 +55,7 @@ body {
     padding-top: 0;
     padding-bottom: 0;
     border: 0;
+    color: #fff;
 }
 
 .btn-default-color
@@ -64,10 +66,9 @@ body {
 .survey-progress-bar
 {
     background-color: white;
-    border-bottom: 2px solid #c2c2c2;
 }
 
 .survey-progress-bar-div
 {
-    margin: 10px 30px 10px 30px;
+    margin: 10px 30px 20px 30px;
 }
