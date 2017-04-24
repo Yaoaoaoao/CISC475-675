@@ -1,21 +1,28 @@
 from django.http import HttpResponse
-from django import forms
-from questionnaire.models import Answer, Questionnaire
 from django.shortcuts import render
+from .search_forms import ResponseForm
+from django.db import connection
 
-QUESTIONNAIRES = Questionnaire.objects.all().values_list('id', 'title')
-QUESTIONNAIRE_CHOICES = [('All', 'All')] + list(QUESTIONNAIRES)
+def db_execute(query):
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        return cursor.fetchall()
 
-
-class ResponseForm(forms.Form):
-    questionnaire = forms.IntegerField(
-        widget=forms.Select(choices=QUESTIONNAIRE_CHOICES),
-    )
-    patient_id = forms.IntegerField()
-    date_from = forms.DateField()
-    date_to = forms.DateField()
+def generate_query(form):
+    questionnaire, patient_id, date_from, date_to = form
+    query = ""
+    return query
 
 
 def index(request):
-    form = ResponseForm()
-    return render(request, 'response/index.html', {'form': form})
+    context = {}
+    if request.method == "POST":
+        form = ResponseForm(request.POST)
+        context['form'] = form
+        if form.is_valid():
+            query = generate_query(form.cleaned_data)
+            context['data'] = db_execute(query)
+    else:
+        context['form'] = ResponseForm()
+
+    return render(request, 'response/index.html', context)
