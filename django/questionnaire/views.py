@@ -36,16 +36,16 @@ def questionView(request, qid, patient_id):
             ).values_list('option_text', flat=True).order_by('option_order')
 
         context['questions'].append(qobj)
-    print context
+    # print context
     return render(request, 'questionnaire/question.html', context)
 
 def submitAnswers(request, qid, patient_id):
-    print request.POST
+    # print request.POST
     #for each_question in request.POST:
     #    print each_question
     for each_question in request.POST:
         if type(each_question) == int:
-            print request.POST[each_question]
+            # print request.POST[each_question]
             single_question = Question.objects.get(id=each_question)
             answer = Answer(question = single_question, submit_date = datetime.datetime.now(),
                         patient_id = patient_id, response = request.POST[each_question], note = request.POST[each_question])

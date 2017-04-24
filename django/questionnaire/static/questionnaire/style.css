@@ -1,5 +1,5 @@
 body {
-    padding: 20px;
+    padding: 5px;
     padding-top: 40px;
 }
 
@@ -8,10 +8,10 @@ body {
     font-size: 15pt;
     font-weight: 200;
     color: #333;
-    margin-top: 1em;
-    /*margin-bottom: 1em;*/
     display: block;
     clear: both;
+    padding-top: 40px;
+    margin-top: -30px;
 }
 
 .one-question-domain {
@@ -44,12 +44,6 @@ body {
     color: white !important;
 }
 
-.verticalLine {
-    padding-left: 1em;
-    padding-right: 0.5em;
-    border-left: solid #01579B;
-}
-
 .btn-nav
 {
     padding-top: 0;
@@ -70,5 +64,9 @@ body {
 
 .survey-progress-bar-div
 {
-    margin: 10px 30px 20px 30px;
+    margin: 10px 10px 15px 10px;
+}
+
+.survey-progress-bar-div a {
+    font-size: 10px;
 }

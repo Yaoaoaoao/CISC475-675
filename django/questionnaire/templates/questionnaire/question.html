@@ -1,50 +1,42 @@
+{% extends "questionnaire/base.html" %}
 {% load static %}
 
-<html>
-<head>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-          crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,300i,400"
-          rel="stylesheet">
-    <link href="{% static 'questionnaire/style.css' %}" rel="stylesheet"
-          type="text/css">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-</head>
-<body>
 
-<h2>Patient ID: {{patient_id}}</h2>
-<h2>
-    <center>{{questionnaire.title}}</center>
-</h2>
-<div class="verticalLine">
-	<h3>
-		<small>{{questionnaire.description}}</small>
-	</h3>
-</div>
+{% block script %}
+    <link href="{% static 'questionnaire/style.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'questionnaire/function.js' %}"></script>
+{% endblock %}
 
+{% block nav %}
 <nav class="navbar-fixed-top survey-progress-bar">
-	<div class="survey-progress-bar-div">
-		<div class = "btn-group btn-group-justified">
-			{% for question in questions %}
-				{% if question.order < 10 %}
-					<a href="#question-{{question.order}}" id = "progress-{{question.order}}" class="btn btn-default-color btn-nav" role = "button">{{question.order}}</a>
-				{% endif %}
-			{% endfor %}
-		</div>
-	</div>
+    <div class="survey-progress-bar-div">
+        <div class="btn-group btn-group-justified">
+            {% for question in questions %}
+                {% if question.order < 10 %}
+                    <a href="#question-{{question.order}}" 
+                       id="progress-{{question.order}}" 
+                       class="btn btn-default-color btn-nav" 
+                       role="button">{{question.order}}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 </nav>
+{% endblock %}
 
+{% block body %} 
+<p>Patient ID: {{patient_id}}</p>
+<h2 class="text-center">{{questionnaire.title}}</h2>
+<blockquote>{{questionnaire.description}}</blockquote>
 <hr>
-<form action = "{% url 'questionnaire:submit' qid=questionnaire.id patient_id=patient_id %}" method="post">
+
+<form action="{% url 'questionnaire:submit' qid=questionnaire.id patient_id=patient_id %}" 
+      method="post">
     {% csrf_token %}
     <div class="container-fluid">
         {% for question in questions %}
         <div id="{{questionnaire.id}}-{{question.order}}">
-            <span id = "question-{{question.order}}">
+            <span id="question-{{question.order}}">
             	<label class="question-label">
                 	<span class="question_id">{{question.order}}. </span>{{question.question_text}}</label></span>
             {% if question.type == 'SCALE' %}
@@ -64,7 +56,7 @@
                     {% endfor %}
                 </div> 
             </div>
-            <input type = "hidden" value = "" name = "{{question.order}}">
+            <input type="hidden" value="" name="{{question.order}}">
             {% else %}
             <div>
                 {% for option in question.options%}
@@ -85,15 +77,4 @@
     <hr>
     <button type="submit" class="btn btn-success btn-block">Submit</button>
 </form>
-<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
-        integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
-        integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
-        crossorigin="anonymous"></script>
-<script src="{% static 'questionnaire/function.js' %}"></script>
-</body>
-</html>
+{% endblock %}
