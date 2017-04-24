@@ -1,7 +1,20 @@
 {% extends "questionnaire/base.html" %}
+{% load static %}
 
 {% block script %}
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<link href="{% static 'response/jquery-ui-datepicker.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'response/jquery-ui.structure.min.css' %}" rel="stylesheet" type="text/css">
+<link href="{% static 'response/jquery-ui.theme.min.css' %}" rel="stylesheet" type="text/css">
+<script src="{% static 'response/jquery-ui-datepicker.min.js' %}"></script>
 <script>
+    $(function(){
+        // http://api.jqueryui.com/datepicker/#option-dateFormat
+        $("#id_date_from").datepicker(
+                
+        );
+        $("#id_date_to").datepicker();
+    });
 </script>
 {% endblock %}
 
@@ -24,6 +37,6 @@
 {% endblock %}
 
 {% block body %}
-Test data
-{{data}}
+Form {{form_data}} <br>
+Data {{data}}
 {% endblock %}
