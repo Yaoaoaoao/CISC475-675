@@ -48,15 +48,14 @@
                     <div class="btn-group" role="group">
                         <button type="button"
                                 name="{{question.order}}"
-                                class="btn btn-default"
-                                patient_id="{{patient_id}}">
+                                class="btn btn-default">
                             {{option.option_text}}
                         </button>
                     </div>
                     {% endfor %}
                 </div> 
             </div>
-            <input type="hidden" value="" name="{{question.order}}">
+            <input type="hidden" value="{{option.id}}" name="{{question.id}}">
             {% else %}
             <div>
                 {% for option in question.options%}
@@ -64,8 +63,7 @@
                     <label><input type="radio"
                                   name="{{option.question.id}}"
 								  order="{{question.order}}"
-                                  value="{{option.option_order}}"
-                                  patient_id="{{patient_id}}">
+                                  value="{{option.id}}">
                         {{option.option_text}}</label>
                 </div>
                 {% endfor %}

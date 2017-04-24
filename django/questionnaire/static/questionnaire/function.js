@@ -38,12 +38,11 @@ $(document).ready(function () {
 
         var showquestion = parseInt(option) - 1;
         display_subquestion(q8_sub_questions, q8_sub_questions[showquestion]);
-    })
+    });
 
     $('input[type = "radio"]').on('click', function(){
         var radioName = $(this).attr('order');
-        if (parseInt(radioName) >9)
-        {
+        if (parseInt(radioName) >9) {
             radioName = '9';
         }
         $('#progress-' + radioName).removeClass('btn-default-color');

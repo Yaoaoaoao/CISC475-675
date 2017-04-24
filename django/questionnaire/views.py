@@ -3,7 +3,6 @@ from django.shortcuts import render
 from .models import *
 from django.db.models import Q
 import datetime
-from django.urls import reverse
 
 def index(request):
     return HttpResponse("You're looking at question.")
@@ -36,20 +35,20 @@ def questionView(request, qid, patient_id):
             ).values_list('option_text', flat=True).order_by('option_order')
 
         context['questions'].append(qobj)
-    # print context
     return render(request, 'questionnaire/question.html', context)
 
 def submitAnswers(request, qid, patient_id):
-    # print request.POST
-    #for each_question in request.POST:
-    #    print each_question
-    for each_question in request.POST:
-        if type(each_question) == int:
-            # print request.POST[each_question]
-            single_question = Question.objects.get(id=each_question)
-            answer = Answer(question = single_question, submit_date = datetime.datetime.now(),
-                        patient_id = patient_id, response = request.POST[each_question], note = request.POST[each_question])
+    if request.method == "POST" :
+        for question_id in request.POST:
+            if question_id == "csrfmiddlewaretoken":
+                continue
+            answer = Answer(question=Question.objects.get(pk=question_id), 
+                            submit_date=datetime.datetime.now(),
+                            patient_id=patient_id, 
+                            response=request.POST[question_id],
+                            note="")
             answer.save()
 
+    print Answer.objects.filter(patient_id = patient_id)
     return HttpResponse("Upload successfully")
 #    return HttpResponseRedirect(reverse('questionnaire:results', args=(qid, patient_id,)))
