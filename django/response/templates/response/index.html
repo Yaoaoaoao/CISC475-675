@@ -34,6 +34,7 @@
 <style>
     body {
         padding: 20px;
+        padding-top: 80px;
     }
     table {
         font-size: 12px;
@@ -43,7 +44,7 @@
 
 
 {% block nav %}
-<nav class="navbar-form">
+<nav class="navbar navbar-form navbar-fixed-top">
     <div class="container-fluid">
         <form id="query" action="" method="POST">
             {% csrf_token %}
@@ -61,6 +62,7 @@
 
 {% block body %}
 <!--Data {{table}}<br><hr>-->
+
 
 <table id="table" class="table table-border"></table>
 {% endblock %}
