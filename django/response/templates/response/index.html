@@ -9,13 +9,36 @@
 <script src="{% static 'response/jquery-ui-datepicker.min.js' %}"></script>
 <script>
     $(function(){
+        var dataset = {{ table|safe}};
+        if (dataset.columns) {
+            $('#table').DataTable( {
+                data: eval(dataset.data),
+                columns: dataset.columns.map(function(ele){
+                    return {title: ele};
+                }),
+                dom: 'Bi',
+                buttons: ['copy', 'csv', 'excel']
+            });
+        }
+        
         // http://api.jqueryui.com/datepicker/#option-dateFormat
         $("#id_date_from").datepicker(
-                
         );
         $("#id_date_to").datepicker();
     });
 </script>
+<!--https://datatables.net/download/-->
+<!-- With extensions: buttons, html5 export, jszip -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.13/b-1.2.4/b-html5-1.2.4/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.13/b-1.2.4/b-html5-1.2.4/datatables.min.js"></script>
+<style>
+    body {
+        padding: 20px;
+    }
+    table {
+        font-size: 12px;
+    }
+</style>
 {% endblock %}
 
 
@@ -37,6 +60,7 @@
 {% endblock %}
 
 {% block body %}
-Form {{form_data}} <br>
-Data {{data}}
+<!--Data {{table}}<br><hr>-->
+
+<table id="table" class="table table-border"></table>
 {% endblock %}

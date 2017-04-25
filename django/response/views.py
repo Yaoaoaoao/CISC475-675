@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .search_forms import ResponseForm
 from django.db import connection
 from questionnaire.models import *
+import json
 
 
 def db_execute(query):
@@ -38,15 +39,26 @@ def generate_query(form):
 
 
 def index(request):
-    context = {}
+    context = {'form': None, 'table': {}}
     if request.method == "POST":
         form = ResponseForm(request.POST)
         context['form'] = form
         if form.is_valid():
             form_data = form.cleaned_data
-            context['form_data'] = form_data
             query = generate_query(form_data)
-            context['data'] = db_execute(query)
+
+            data = []
+            for row in db_execute(query):
+                data.append([row[0]] + row[1].split(',') + [row[2]])
+
+            question_count = Question.objects.filter(
+                questionnaire=form_data['questionnaire_id']).count()
+            title = ['Patient id'] + map(str, range(1, question_count + 1)) + [
+                'Total Score']
+            context['table'] = {
+                'columns': title,
+                'data': json.dumps(data)
+            }
     else:
         context['form'] = ResponseForm()
 
