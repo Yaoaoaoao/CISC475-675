@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         WebView myWebView = (WebView) findViewById(R.id.webView1);
-        myWebView.loadUrl("http://127.0.0.1:8000/questionnaire/2/patient_id/100");
+        myWebView.loadUrl("http://10.0.2.2:8000/questionnaire/2/patient_id/100");
         myWebView.clearHistory();
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);

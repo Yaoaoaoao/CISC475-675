@@ -25,9 +25,9 @@
 {% endblock %}
 
 {% block body %} 
-<p>Patient ID: {{patient_id}}</p>
-<h2 class="text-center">{{questionnaire.title}}</h2>
-<blockquote>{{questionnaire.description}}</blockquote>
+<p style = "font-family: 'Roboto', sans-serif">Patient ID: {{patient_id}}</p>
+<h2 class="text-center" style = "font-family: 'Open Sans', sans-serif;font-weight: 200">{{questionnaire.title}}</h2>
+<blockquote style = "font-family: 'Open Sans', sans-serif;font-weight: 300">{{questionnaire.description}}</blockquote>
 <hr>
 
 <form action="{% url 'questionnaire:submit' qid=questionnaire.id patient_id=patient_id %}" 
