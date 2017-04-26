@@ -17,7 +17,17 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+        <Button
+            android:id="@+id/refresh"
+            android:layout_width="84dp"
+            android:layout_height="48dp"
+            android:text="refresh"
+            android:backgroundTint="@color/colorAccent"
+            android:layout_gravity="right"
+            android:fontFamily="Open Sans"
+            />
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,8 +26,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Your Questionnaires");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        WebView myWebView = (WebView) findViewById(R.id.webView1);
-        myWebView.loadUrl("http://10.0.2.2:8000/questionnaire/2/patient_id/100");
+
+        Button refresh = (Button) findViewById(R.id.refresh);
+
+        final WebView myWebView = (WebView) findViewById(R.id.webView1);
+        myWebView.loadUrl("http://10.0.2.2:8000/questionnaire/2/patient_id/10086");
         myWebView.clearHistory();
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -36,6 +40,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return false;
+            }
+        });
+
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myWebView.reload();
+
             }
         });
 
