@@ -28,7 +28,9 @@ def generate_query(form):
         where_stm = "WHERE " + " AND ".join(where_conditions)
 
     query = """
-        SELECT patient_id, GROUP_CONCAT(response) as answers, SUM(option.score)
+        SELECT patient_id, submit_date, 
+            GROUP_CONCAT(option.option_order) as answers, 
+            SUM(option.score)
         FROM answer 
           JOIN question ON answer.question_id = question.id
           JOIN option ON answer.response = option.id
@@ -49,11 +51,12 @@ def index(request):
 
             data = []
             for row in db_execute(query):
-                data.append([row[0]] + row[1].split(',') + [row[2]])
+                row = map(str, row)
+                data.append(row[:2] + row[2].split(',') + [row[3]])
 
             question_count = Question.objects.filter(
                 questionnaire=form_data['questionnaire_id']).count()
-            title = ['Patient id'] + map(str, range(1, question_count + 1)) + [
+            title = ['Patient id', 'Submit date'] + map(str, range(1, question_count + 1)) + [
                 'Total Score']
             context['table'] = {
                 'columns': title,
