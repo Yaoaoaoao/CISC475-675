@@ -3,6 +3,8 @@ from django.shortcuts import render
 from .models import *
 from django.db.models import Q
 import datetime
+from django.db import IntegrityError
+
 
 def index(request):
     return HttpResponse("You're looking at question.")
@@ -37,18 +39,38 @@ def questionView(request, qid, patient_id):
         context['questions'].append(qobj)
     return render(request, 'questionnaire/question.html', context)
 
-def submitAnswers(request, qid, patient_id):
-    if request.method == "POST" :
-        for question_id in request.POST:
-            if question_id == "csrfmiddlewaretoken":
-                continue
-            answer = Answer(question=Question.objects.get(pk=question_id), 
-                            submit_date=datetime.datetime.now(),
-                            patient_id=patient_id, 
-                            response=request.POST[question_id],
-                            note="")
-            answer.save()
 
-    print Answer.objects.filter(patient_id = patient_id)
-    return HttpResponse("Upload successfully")
-#    return HttpResponseRedirect(reverse('questionnaire:results', args=(qid, patient_id,)))
+def submitAnswers(request, patient_id):
+    """ 
+        If submit is successful, return 
+            {"status": true, "patient_id": xxx, "submit_date": today's date}
+        If submit fails, return 
+            {"status": true, "patient_id": xxx, "submit_date": today's date, 
+             "error_msg": msg}
+    """
+    template = 'questionnaire/submit.html'
+    submit_date = datetime.datetime.now()
+    context = {
+        'patient_id': patient_id,
+        'submit_date': submit_date,
+        'status': False
+    }
+
+    if request.method == "POST":
+        try:
+            for question_id, response in request.POST.iteritems():
+                if question_id == "csrfmiddlewaretoken":
+                    continue
+                answer = Answer(question=Question.objects.get(pk=question_id),
+                                submit_date=submit_date,
+                                patient_id=patient_id,
+                                response=response,
+                                note="")
+                answer.save()
+            context['status'] = True
+        except IntegrityError as e:
+            context['error_msg'] = e.message
+    else:
+        context['error_msg'] = 'Form is invalid.'
+
+    return render(request, template, context)

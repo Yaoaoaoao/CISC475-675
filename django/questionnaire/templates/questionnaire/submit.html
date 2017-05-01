@@ -1,0 +1,27 @@
+{% extends "questionnaire/base.html" %}
+{% load static %}
+
+{% block script %}
+<link href="{% static 'questionnaire/submit.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block body %}
+<div class="text-center">
+{% if status %}
+    <h1><span class="glyphicon glyphicon-ok-circle panel-heading text-success"></span></h1>
+    <h5>Thank you!</h5>
+    <h5>Your answers have been successfully saved!</h5>
+{% else %}
+    <h1><span class="glyphicon glyphicon-exclamation-sign panel-heading text-danger"></span></h1>
+    <h5>Something went wrong. Please try again later.</h5>
+    <small> {{error_msg}} </small>
+    <h5>Contact us: <a href="mailto:xxx@udel.edu" target="_top">xxx@udel.edu</a></h5>
+{% endif %}
+
+<br>
+<div>        
+    <p><span class="glyphicon glyphicon-user"></span>Patient id: {{patient_id}}</p>
+    <p><span class="glyphicon glyphicon-calendar"></span>Submit date: {{submit_date}}</p>
+</div>
+</div>
+{% endblock %}

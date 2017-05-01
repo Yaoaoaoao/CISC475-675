@@ -30,7 +30,9 @@
 <blockquote style = "font-family: 'Open Sans', sans-serif;font-weight: 300">{{questionnaire.description}}</blockquote>
 <hr>
 
-<form action="{% url 'questionnaire:submit' qid=questionnaire.id patient_id=patient_id %}" 
+{% url 'questionnaire:submit' patient_id %}
+
+<form action="{% url 'questionnaire:submit' patient_id %}" 
       method="post">
     {% csrf_token %}
     <div class="container-fluid">
