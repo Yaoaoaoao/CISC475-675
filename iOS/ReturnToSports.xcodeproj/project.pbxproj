@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		081B09021EAD358B009B64D0 /* Patient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081B09011EAD358B009B64D0 /* Patient.swift */; };
 		08917C871EAC66020008E6AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08917C861EAC66020008E6AB /* AppDelegate.swift */; };
 		08917C891EAC66020008E6AB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08917C881EAC66020008E6AB /* ViewController.swift */; };
 		08917C8C1EAC66020008E6AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08917C8A1EAC66020008E6AB /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		081B09011EAD358B009B64D0 /* Patient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Patient.swift; sourceTree = "<group>"; };
 		08917C831EAC66020008E6AB /* ReturnToSports.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReturnToSports.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08917C861EAC66020008E6AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		08917C881EAC66020008E6AB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				08917C861EAC66020008E6AB /* AppDelegate.swift */,
 				08917C881EAC66020008E6AB /* ViewController.swift */,
 				08917CA61EAC67160008E6AB /* WebViewController.swift */,
+				081B09011EAD358B009B64D0 /* Patient.swift */,
 				08917C8A1EAC66020008E6AB /* Main.storyboard */,
 				08917C8D1EAC66020008E6AB /* Assets.xcassets */,
 				08917C8F1EAC66020008E6AB /* LaunchScreen.storyboard */,
@@ -203,6 +206,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08917C891EAC66020008E6AB /* ViewController.swift in Sources */,
+				081B09021EAD358B009B64D0 /* Patient.swift in Sources */,
 				08917CA71EAC67160008E6AB /* WebViewController.swift in Sources */,
 				08917C871EAC66020008E6AB /* AppDelegate.swift in Sources */,
 			);
@@ -410,6 +414,7 @@
 				08917CA21EAC66020008E6AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		08917CA31EAC66020008E6AB /* Build configuration list for PBXNativeTarget "ReturnToSportsTests" */ = {
 			isa = XCConfigurationList;
@@ -418,6 +423,7 @@
 				08917CA51EAC66020008E6AB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

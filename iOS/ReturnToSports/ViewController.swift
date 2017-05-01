@@ -10,17 +10,20 @@ import UIKit
 import os.log
 
 var patient: Patient?
-var questionnaireId: String = "2"
+var questionnaireId: String = "1"
 
 class ViewController: UIViewController, UITextFieldDelegate {
     // MARK: Properties:
     @IBOutlet weak var patientIdTextField: UITextField!
     @IBOutlet weak var surveyButton: UIButton!
+    @IBOutlet weak var patientIdMissingLabel: UILabel!
     
     override func viewDidLoad() {
+       
         super.viewDidLoad()
         
         patientIdTextField.delegate = self
+        patientIdTextField.setBottomBorder()
         
         // Load any saved patient.
         if let savedPatient = loadPatient() {
@@ -69,12 +72,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         if let id = patientIdTextField.text, !id.isEmpty {
             // print("patient id is entered")
             surveyButton.isEnabled = true
+            surveyButton.backgroundColor = UIColor.blue
+            patientIdMissingLabel.text = " "
             // Create a new Pateint
             patient = Patient(id)
         }
         else {
             // print("patient id is empty")
             surveyButton.isEnabled = false
+            surveyButton.backgroundColor = UIColor.lightGray
+            patientIdMissingLabel.text = "! Patient id is required."
             patient = Patient("")
         }
     }
@@ -91,5 +98,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     private func loadPatient() -> Patient?  {
         return NSKeyedUnarchiver.unarchiveObject(withFile: Patient.ArchiveURL.path) as? Patient
+    }
+}
+
+
+extension UITextField {
+    func setBottomBorder() {
+        self.borderStyle = .none
+        self.layer.backgroundColor = UIColor.white.cgColor
+        
+        self.layer.masksToBounds = false
+        self.layer.shadowColor = UIColor.gray.cgColor
+        self.layer.shadowOffset = CGSize(width: 0.0, height: 0.5)
+        self.layer.shadowOpacity = 1.0
+        self.layer.shadowRadius = 0.0
     }
 }
