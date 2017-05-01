@@ -5,13 +5,13 @@ body {
 
 .question-label {
     font-family: 'Roboto', sans-serif;
-    font-size: 15pt;
-    font-weight: 200;
-    color: #333;
+    font-size: 14pt;
+    font-weight: 300;
+    color: #000;
     display: block;
     clear: both;
-    padding-top: 40px;
-    margin-top: -30px;
+    padding-top: 45px;
+    margin-top: -25px;
 }
 
 .one-question-domain {
