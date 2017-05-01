@@ -5,8 +5,7 @@ $(document).ready(function () {
         $('button[name="' + btnGroupName + '"]').removeClass('buttonClicked');
         $('input[name="' + btnGroupName + '"]').val($(this).text().trim());
         $(this).addClass('buttonClicked');
-        $('#progress-' + btnGroupName).removeClass('btn-default-color');
-        $('#progress-' + btnGroupName).addClass('btn-success');
+        $('#progress-' + btnGroupName).removeClass('btn-default-color').addClass('btn-success');
     });
 
     // FOR Questionnaire 1 (VISA-A) question 8
@@ -33,19 +32,17 @@ $(document).ready(function () {
     display_subquestion(q8_sub_questions);
 
     // Set Question 8 events. 
-    $("#1-8").find('input[type="radio"]').on('change', function () {
-        var option = $(this).val();
-
-        var showquestion = parseInt(option) - 1;
+    var options = $("#1-8").find('input[type="radio"]');
+    options.on('change', function (ele, idx) {
+        var showquestion = options.index(this);
         display_subquestion(q8_sub_questions, q8_sub_questions[showquestion]);
     });
 
-    $('input[type = "radio"]').on('click', function(){
+    $('input[type = "radio"]').on('click', function () {
         var radioName = $(this).attr('order');
-        if (parseInt(radioName) >9) {
+        if (parseInt(radioName) > 9) {
             radioName = '9';
         }
-        $('#progress-' + radioName).removeClass('btn-default-color');
-        $('#progress-' + radioName).addClass('btn-success');
+        $('#progress-' + radioName).removeClass('btn-default-color').addClass('btn-success');
     })
 });
