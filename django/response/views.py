@@ -29,7 +29,7 @@ def generate_query(form):
 
     query = """
         SELECT patient_id, submit_date, 
-            GROUP_CONCAT(option.option_order) as answers, 
+            GROUP_CONCAT(question.question_order || '-' || option.option_order) as answers, 
             SUM(option.score)
         FROM answer 
           JOIN question ON answer.question_id = question.id
@@ -47,17 +47,23 @@ def index(request):
         context['form'] = form
         if form.is_valid():
             form_data = form.cleaned_data
-            query = generate_query(form_data)
-
-            data = []
-            for row in db_execute(query):
-                row = map(str, row)
-                data.append(row[:2] + row[2].split(',') + [row[3]])
-
             question_count = Question.objects.filter(
                 questionnaire=form_data['questionnaire_id']).count()
-            title = ['Patient id', 'Submit date'] + map(str, range(1, question_count + 1)) + [
-                'Total Score']
+            question_title = map(str, range(1, question_count + 1))
+            title = ['Patient id', 'Submit date'] + question_title + ['Total Score']
+
+            data = []
+            query = generate_query(form_data)
+            for record in db_execute(query):
+                responses = {str(i): '' for i in range(1, question_count + 1)}
+                for col in record[2].split(','):
+                    idx, response = col.split('-')
+                    responses[idx] = response
+
+                # sorted patient response by key
+                row = [responses[k] for k in sorted(responses, key=int)]
+                data.append(map(str, record[:2]) + row + [record[3]])
+
             context['table'] = {
                 'columns': title,
                 'data': json.dumps(data)
