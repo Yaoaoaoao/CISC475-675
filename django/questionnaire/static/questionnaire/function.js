@@ -3,9 +3,14 @@ $(document).ready(function () {
     $('button').on('click', function () {
         var btnGroupName = $(this).prop('name');
         $('button[name="' + btnGroupName + '"]').removeClass('buttonClicked');
-        $('input[name="' + btnGroupName + '"]').val($(this).text().trim());
         $(this).addClass('buttonClicked');
-        $('#progress-' + btnGroupName).removeClass('btn-default-color').addClass('btn-success');
+
+        // Update btn-group input hidden value.
+        $('input[name="' + btnGroupName + '"]').val($(this).attr('value').trim());
+        
+        // Set progress bar. 
+        var order = $(this).attr('order');
+        $('#progress-' + order).removeClass('btn-default-color').addClass('btn-success');
     });
 
     // FOR Questionnaire 1 (VISA-A) question 8

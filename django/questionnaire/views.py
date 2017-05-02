@@ -21,7 +21,8 @@ def questionView(request, qid, patient_id):
     questions = Question.objects.filter(questionnaire__id=qid).order_by(
         'question_order')
     for question in questions:
-        qobj = {'order': question.question_order,
+        qobj = {'id': question.id,
+                'order': question.question_order,
                 'question_text': question.question_text,
                 'type': question.question_type,
                 'options': Option.objects.filter(
@@ -57,6 +58,7 @@ def submitAnswers(request, patient_id):
     }
 
     if request.method == "POST":
+        print request.POST
         try:
             for question_id, response in request.POST.iteritems():
                 if question_id == "csrfmiddlewaretoken":
@@ -70,6 +72,7 @@ def submitAnswers(request, patient_id):
             context['status'] = True
         except IntegrityError as e:
             context['error_msg'] = e.message
+
     else:
         context['error_msg'] = 'Form is invalid.'
 

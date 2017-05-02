@@ -4,7 +4,7 @@
 
 {% block script %}
     <link href="{% static 'questionnaire/style.css' %}" rel="stylesheet" type="text/css">
-    <script src="{% static 'questionnaire/function.js' %}"></script>
+    <script src="{% static 'questionnaire/function.js' %}?v=2"></script>
 {% endblock %}
 
 {% block nav %}
@@ -30,8 +30,6 @@
 <blockquote style = "font-family: 'Open Sans', sans-serif;font-weight: 300">{{questionnaire.description}}</blockquote>
 <hr>
 
-{% url 'questionnaire:submit' patient_id %}
-
 <form action="{% url 'questionnaire:submit' patient_id %}" 
       method="post">
     {% csrf_token %}
@@ -49,7 +47,9 @@
                     {% for option in question.options%}
                     <div class="btn-group" role="group">
                         <button type="button"
-                                name="{{question.order}}"
+                                name="{{question.id}}"
+                                order="{{question.order}}"
+                                value="{{option.id}}"
                                 class="btn btn-default">
                             {{option.option_text}}
                         </button>
@@ -57,13 +57,13 @@
                     {% endfor %}
                 </div> 
             </div>
-            <input type="hidden" value="{{option.id}}" name="{{question.id}}">
+            <input type="hidden" value="" name="{{question.id}}">
             {% else %}
             <div>
                 {% for option in question.options%}
                 <div class="radio">
                     <label><input type="radio"
-                                  name="{{option.question.id}}"
+                                  name="{{question.id}}"
 								  order="{{question.order}}"
                                   value="{{option.id}}">
                         {{option.option_text}}</label>
