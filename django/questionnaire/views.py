@@ -77,3 +77,6 @@ def submitAnswers(request, patient_id):
         context['error_msg'] = 'Form is invalid.'
 
     return render(request, template, context)
+
+def aboutView(request):
+    return render(request, 'questionnaire/about.html', {})

@@ -1,0 +1,15 @@
+{% extends "questionnaire/base.html" %}
+{% load static %}
+
+{% block body %}
+<div class="text-center">
+    <img src="{% static 'questionnaire/logo.jpg' %}" 
+         style="max-width: 200px;"/>
+    <p>Your participation in this survey is voluntary. </p>
+    <p>This research project is conducted by <br/>
+        Karin Grävare Silbernagel PT, PhD, ATC <br/>
+        at Department of Physical Therapy, University of Delaware. </p>
+    <p>You can contact the research team via email 
+        <a href="mailto:tendonreasearch@udel.edu">tendonreasearch@udel.edu</a>.</p>
+</div>
+{% endblock %}
