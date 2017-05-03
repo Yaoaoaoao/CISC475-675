@@ -2,9 +2,12 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from .models import *
 from django.db.models import Q
-import datetime
+from django.utils import timezone
+from threading import local
+import pytz
+from django.conf import settings
 from django.db import IntegrityError
-
+from datetime import datetime, timedelta, tzinfo
 
 def index(request):
     return HttpResponse("You're looking at question.")
@@ -50,7 +53,8 @@ def submitAnswers(request, patient_id):
              "error_msg": msg}
     """
     template = 'questionnaire/submit.html'
-    submit_date = datetime.datetime.now()
+    submit_date = timezone.now()
+    print submit_date
     context = {
         'patient_id': patient_id,
         'submit_date': submit_date,
