@@ -5,6 +5,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.db import IntegrityError
 
+
 def index(request):
     return HttpResponse("You're looking at question.")
 
@@ -40,7 +41,7 @@ def questionView(request, qid, patient_id):
     return render(request, 'questionnaire/question.html', context)
 
 
-def submitAnswers(request, patient_id):
+def submitAnswers(request, qid, patient_id):
     """ 
         If submit is successful, return 
             {"status": true, "patient_id": xxx, "submit_date": today's date}
@@ -55,26 +56,53 @@ def submitAnswers(request, patient_id):
         'submit_date': submit_date,
         'status': False
     }
+    questions = Question.objects.filter(questionnaire=qid).order_by('id')
 
     if request.method == "POST":
         try:
-            for question_id, response in request.POST.iteritems():
-                if question_id == "csrfmiddlewaretoken":
+            responses = {q: None for q in questions}
+
+            # Validate every question is answered
+            for question in questions:
+                answer = request.POST.get(str(question.id), None)
+                if answer == '' or answer is None:
+                    if not (qid == '1' and question.id > 8):
+                        raise Exception(question.question_order)
+                else:
+                    responses[question] = answer
+
+            # check questionnaire 1: 9, 10, 11 questions should only has one 
+            # answer. 
+            if qid == '1':
+                extra_q = []
+                for q, a in responses.iteritems():
+                    if q.question_order > 8:
+                        extra_q.append(a is not None)
+                if not any(extra_q) or extra_q.count(True) > 1:
+                    raise Exception(9)
+
+            # Save every question. 
+            for question, answer in responses.iteritems():
+                if answer is None:
                     continue
-                answer = Answer(question=Question.objects.get(pk=question_id),
+                answer = Answer(question=question,
                                 submit_date=submit_date,
                                 patient_id=patient_id,
-                                response=response,
+                                response=answer,
                                 note="")
                 answer.save()
             context['status'] = True
         except IntegrityError as e:
             context['error_msg'] = e.message
+        except Exception as err:
+            context['error_msg'] = 'Question #{} is incomplete'.format(
+                err.args[0])
 
     else:
         context['error_msg'] = 'Form is invalid.'
 
     return render(request, template, context)
+
 
 def aboutView(request):
     return render(request, 'questionnaire/about.html', {})
