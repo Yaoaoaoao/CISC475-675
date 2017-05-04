@@ -1,0 +1,13 @@
+{% extends "questionnaire/base.html" %}
+{% load static %}
+
+{% block body %}
+<div class="text-center">
+<h3>Logged out!</h3>
+<br/>
+
+<button type="button" class="btn btn-default">
+    <a href="{% url 'questionnaire:login' %}">Re-login</a>
+</button>
+</div>
+{% endblock %}

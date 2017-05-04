@@ -1,10 +1,14 @@
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 
-from . import views
+from .views import *
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^about/$', views.aboutView, name='about'),
-    url(r'^(?P<qid>[0-9]+)/patient_id/(?P<patient_id>[0-9]+)/$', views.questionView, name='view'),
-    url(r'^patient_id/(?P<patient_id>[0-9]+)/submit/$', views.submitAnswers, name='submit'),
+    url(r'^$', index, name='index'),
+    url(r'^(?P<qid>[0-9]+)/patient_id/(?P<patient_id>[0-9]+)/$', questionView, name='view'),
+    url(r'^patient_id/(?P<patient_id>[0-9]+)/submit/$', submitAnswers, name='submit'),
+    url(r'^about/$', aboutView, name='about'),
+
+    url(r'login/$', auth_views.login, {'template_name': 'questionnaire/login.html'}, name='login'),
+    url(r'logout/$', auth_views.logout, {'template_name': 'questionnaire/logout.html'}, name='logout'),
 ]

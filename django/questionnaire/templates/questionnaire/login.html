@@ -1,0 +1,29 @@
+{% extends "questionnaire/base.html" %}
+{% load static %}
+
+{% block body %}
+<div class="text-center">    
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<img src="{% static 'questionnaire/logo.jpg' %}"
+     style="max-width: 200px;"/>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-default">Login</button>
+    <button type="button" class="btn btn-default">
+        <a href="{% url 'questionnaire:logout' %}">logout</a></button>
+</form>
+</div>
+<script>
+    // Get query string
+    // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+    var qd = {};
+    if (location.search) location.search.substr(1).split("&").forEach(function(item) {var s = item.split("="), k = s[0], v = s[1] && decodeURIComponent(s[1]); (qd[k] = qd[k] || []).push(v)})
+    $('#id_username').val(qd['username']);
+</script>
+{% endblock %}

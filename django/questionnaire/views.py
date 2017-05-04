@@ -1,13 +1,9 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from .models import *
+from questionnaire.models import *
 from django.db.models import Q
 from django.utils import timezone
-from threading import local
-import pytz
-from django.conf import settings
 from django.db import IntegrityError
-from datetime import datetime, timedelta, tzinfo
 
 def index(request):
     return HttpResponse("You're looking at question.")
@@ -54,7 +50,6 @@ def submitAnswers(request, patient_id):
     """
     template = 'questionnaire/submit.html'
     submit_date = timezone.now()
-    print submit_date
     context = {
         'patient_id': patient_id,
         'submit_date': submit_date,
@@ -62,7 +57,6 @@ def submitAnswers(request, patient_id):
     }
 
     if request.method == "POST":
-        print request.POST
         try:
             for question_id, response in request.POST.iteritems():
                 if question_id == "csrfmiddlewaretoken":
