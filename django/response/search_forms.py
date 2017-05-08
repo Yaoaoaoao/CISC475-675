@@ -21,3 +21,10 @@ class ResponseForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={'class':'form-control'})
     )
+
+
+class TrackForm(forms.Form):
+    patient_id = forms.IntegerField(
+        required=False,
+        widget=forms.TextInput(attrs={'class':'form-control'})
+    )

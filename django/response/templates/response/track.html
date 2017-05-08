@@ -1,0 +1,117 @@
+{% extends "questionnaire/base.html" %}
+{% load static %}
+
+{% block script %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    var data = {{data|safe}};
+
+    if (!$.isEmptyObject(data)) {
+        google.charts.load('current', {'packages': ['corechart', 'table']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var questionnaire = data[1];
+            var linedata = new google.visualization.DataTable(questionnaire.data);
+            var linechart = new google.visualization.LineChart($('#linechart')[0]);
+            linechart.draw(linedata, {
+                title: questionnaire.title,
+                width: 800,
+                height: 400,
+                vAxis: {
+                    title: 'Severity Score',
+                    format: '0',
+                    minValue: 0
+                },
+                legend: 'none',
+                series: {
+                    0: {
+                        pointShape: 'circle',
+                        pointSize: 10,
+                        color: 'blue'
+                    }
+                }
+            });
+            var linetable = new google.visualization.Table($('#linetable')[0]);
+            linetable.draw(linedata);
+
+            var questionnaire2 = data[2];
+            var linedata2 = new google.visualization.DataTable(questionnaire2.data);
+            var linechart2 = new google.visualization.LineChart($('#linechart2')[0]);
+            linechart2.draw(linedata2, {
+                title: questionnaire2.title,
+                width: 800,
+                height: 400,
+                vAxis: {
+                    title: 'Severity Score',
+                    format: '0',
+                    minValue: 0
+                },
+                legend: 'none',
+                series: {
+                    0: {
+                        pointShape: 'triangle',
+                        pointSize: 10,
+                        color: 'red'
+                    }
+                }
+            });
+            var linetable2 = new google.visualization.Table($('#linetable2')[0]);
+            linetable2.draw(linedata2);
+        }
+    }
+});
+</script>
+<style>
+    body {
+        padding: 20px;
+        padding-top: 80px;
+    }
+    nav {
+        background-color: #fff;
+    }
+    table {
+        font-size: 12px;
+    }
+</style>
+{% endblock %}
+
+
+{% block nav %}
+<nav class="navbar navbar-form navbar-fixed-top">
+    <div class="container-fluid">
+        <form id="query" action="" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.errors }}
+                {{ field.label_tag }} {{ field }}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
+    </div>
+</nav>
+{% endblock %}
+
+{% block body %}
+{% if error %}{{error}}{% endif %}
+{% if data %}
+<table class="table table-border">
+    <tr>
+        <td class="col-md-7"><div id="linechart"></div></td>
+        <td class="col-md-1"><button class="btn btn-default btn-xs"
+                                     data-toggle="collapse" data-target="#linetable">
+            Show Data</button></td>
+        <td class="col-md-4"><div id="linetable" class="collapse"></div></td>
+    </tr>
+    <tr>
+        <td class="col-md-7"><div id="linechart2"></div></td>
+        <td class="col-md-1"><button class="btn btn-default btn-xs"
+                                     data-toggle="collapse" data-target="#linetable2">
+            Show Data</button></td>
+        <td class="col-md-4"><div id="linetable2" class="collapse"></div></td>
+    </tr>
+</table>
+{% endif %}
+{% endblock %}

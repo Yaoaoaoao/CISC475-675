@@ -1,43 +1,8 @@
-from django.http import HttpResponse
 from django.shortcuts import render
-from .search_forms import ResponseForm
-from django.db import connection
+from .utils import *
+from response.search_forms import ResponseForm
 from questionnaire.models import *
 import json
-
-
-def db_execute(query):
-    with connection.cursor() as cursor:
-        cursor.execute(query)
-        return cursor.fetchall()
-
-
-def generate_query(form):
-    where_conditions = []
-    if form['questionnaire_id']:
-        where_conditions.append(
-            "question.questionnaire_id = {}".format(form['questionnaire_id']))
-    if form['patient_id']:
-        where_conditions.append(
-            "patient_id = {}".format(form['patient_id'])
-        )
-    # DateTime
-
-    where_stm = ""
-    if len(where_conditions):
-        where_stm = "WHERE " + " AND ".join(where_conditions)
-
-    query = """
-        SELECT patient_id, submit_date, 
-            GROUP_CONCAT(question.question_order || '-' || option.option_order) as answers, 
-            SUM(option.score)
-        FROM answer 
-          JOIN question ON answer.question_id = question.id
-          JOIN option ON answer.response = option.id
-        {}
-        GROUP BY question.questionnaire_id, patient_id, submit_date
-    """.format(where_stm)
-    return query
 
 
 def index(request):
@@ -50,7 +15,8 @@ def index(request):
             question_count = Question.objects.filter(
                 questionnaire=form_data['questionnaire_id']).count()
             question_title = map(str, range(1, question_count + 1))
-            title = ['Patient id', 'Submit date'] + question_title + ['Total Score']
+            title = ['Patient id', 'Submit date'] + question_title + [
+                'Total Score']
 
             data = []
             query = generate_query(form_data)
