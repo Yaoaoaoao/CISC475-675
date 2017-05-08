@@ -74,8 +74,8 @@ class Answer(models.Model):
     question = models.ForeignKey(Question)
     patient_id = models.PositiveIntegerField()  # max: 2147483647
     submit_date = models.DateField()
-    response = models.TextField(null=True)
-    note = models.TextField()
+    response = models.TextField()
+    note = models.TextField(null=True)
 
     def __str__(self):
         return str(self.id)

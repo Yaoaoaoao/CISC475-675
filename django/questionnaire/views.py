@@ -49,7 +49,9 @@ def submitAnswers(request, qid, patient_id):
              "error_msg": msg}
     """
     template = 'questionnaire/submit.html'
-    submit_date = timezone.now()
+    # submit_date = timezone.now()
+    from datetime import timedelta
+    submit_date = timezone.now() - timedelta(9)
     context = {
         'patient_id': patient_id,
         'submit_date': submit_date,

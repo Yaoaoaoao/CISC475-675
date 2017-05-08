@@ -16,8 +16,9 @@ $(document).ready(function () {
             var linechart = new google.visualization.LineChart($('#linechart')[0]);
             linechart.draw(linedata, {
                 title: questionnaire.title,
-                width: 800,
+                width: 1000,
                 height: 400,
+                hAxis: { slantedText: true},
                 vAxis: {
                     title: 'Severity Score',
                     format: '0',
@@ -40,8 +41,9 @@ $(document).ready(function () {
             var linechart2 = new google.visualization.LineChart($('#linechart2')[0]);
             linechart2.draw(linedata2, {
                 title: questionnaire2.title,
-                width: 800,
+                width: 1000,
                 height: 400,
+                hAxis: { slantedText: true},
                 vAxis: {
                     title: 'Severity Score',
                     format: '0',
@@ -99,18 +101,22 @@ $(document).ready(function () {
 {% if data %}
 <table class="table table-border">
     <tr>
-        <td class="col-md-7"><div id="linechart"></div></td>
-        <td class="col-md-1"><button class="btn btn-default btn-xs"
-                                     data-toggle="collapse" data-target="#linetable">
-            Show Data</button></td>
-        <td class="col-md-4"><div id="linetable" class="collapse"></div></td>
+        <td class="col-md-10"><div id="linechart"></div></td>
+        <td class="col-md-2">
+            <button class="btn btn-default btn-xs"
+                     data-toggle="collapse" data-target="#linetable">
+                    Show Data</button>
+            <div id="linetable" class="collapse"></div>
+        </td>
     </tr>
     <tr>
-        <td class="col-md-7"><div id="linechart2"></div></td>
-        <td class="col-md-1"><button class="btn btn-default btn-xs"
-                                     data-toggle="collapse" data-target="#linetable2">
-            Show Data</button></td>
-        <td class="col-md-4"><div id="linetable2" class="collapse"></div></td>
+        <td class="col-md-10"><div id="linechart2"></div></td>
+        <td class="col-md-2">
+            <button class="btn btn-default btn-xs"
+                     data-toggle="collapse" data-target="#linetable2">
+                    Show Data</button>
+            <div id="linetable2" class="collapse"></div>
+        </td>
     </tr>
 </table>
 {% endif %}
