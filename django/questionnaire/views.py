@@ -12,11 +12,10 @@ def index(request):
 
 def questionView(request, qid, patient_id):
     context = {'questionnaire': None,
-               'patient_id': None,
+               'patient_id': patient_id,
                'questions': []}
 
     context['questionnaire'] = Questionnaire.objects.get(id=qid)
-    context['patient_id'] = int(patient_id)
 
     questions = Question.objects.filter(questionnaire__id=qid).order_by(
         'question_order')
