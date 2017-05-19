@@ -2,6 +2,8 @@ from django.shortcuts import render
 from .utils import *
 from response.search_forms import TrackForm
 from questionnaire.models import *
+from django.contrib.auth.decorators import user_passes_test
+from django.urls import reverse_lazy
 import json
 
 
@@ -27,6 +29,8 @@ def track_data_format(data):
     return json.dumps({"cols": columns, "rows": rows})
 
 
+@user_passes_test(lambda u: u.is_superuser,
+                  login_url=reverse_lazy('questionnaire:login'))
 def trackView(request):
     context = {'form': None, 'data': {}, 'error': None}
     if request.method == "POST":

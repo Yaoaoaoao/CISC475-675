@@ -2,9 +2,13 @@ from django.shortcuts import render
 from .utils import *
 from response.search_forms import ResponseForm
 from questionnaire.models import *
+from django.contrib.auth.decorators import user_passes_test
+from django.urls import reverse_lazy
 import json
 
 
+@user_passes_test(lambda u: u.is_superuser,
+                  login_url=reverse_lazy('questionnaire:login'))
 def index(request):
     context = {'form': None, 'table': {}}
     if request.method == "POST":

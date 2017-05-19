@@ -4,12 +4,14 @@ from questionnaire.models import *
 from django.db.models import Q
 from django.utils import timezone
 from django.db import IntegrityError
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse_lazy
 
 
 def index(request):
     return HttpResponse("You're looking at question.")
 
-
+@login_required(login_url=reverse_lazy('questionnaire:login'))
 def questionView(request, qid, patient_id):
     context = {'questionnaire': None,
                'patient_id': patient_id,
@@ -40,6 +42,7 @@ def questionView(request, qid, patient_id):
     return render(request, 'questionnaire/question.html', context)
 
 
+@login_required(login_url=reverse_lazy('questionnaire:login'))
 def submitAnswers(request, qid, patient_id):
     """ 
         If submit is successful, return 
@@ -105,5 +108,6 @@ def submitAnswers(request, qid, patient_id):
     return render(request, template, context)
 
 
+@login_required(login_url=reverse_lazy('questionnaire:login'))
 def aboutView(request):
     return render(request, 'questionnaire/about.html', {})
