@@ -9,7 +9,7 @@ import json
 
 @user_passes_test(lambda u: u.is_superuser,
                   login_url=reverse_lazy('questionnaire:login'))
-def index(request):
+def responseTable(request):
     context = {'form': None, 'table': {}}
     if request.method == "POST":
         form = ResponseForm(request.POST)
@@ -41,4 +41,4 @@ def index(request):
     else:
         context['form'] = ResponseForm()
 
-    return render(request, 'response/index.html', context)
+    return render(request, 'response/response.html', context)
