@@ -25,7 +25,10 @@
 {% endblock %}
 
 {% block body %} 
-<p>Patient ID: {{patient_id}}</p>
+<p>Patient ID: {{patient_id}} &nbsp;&nbsp;&nbsp;
+    <a href="{% url 'questionnaire:logout' %}">Log out</a>
+</p>
+
 <h2 class="text-center">{{questionnaire.title}}</h2>
 <blockquote><small>{{questionnaire.description}}</small></blockquote>
 <hr>

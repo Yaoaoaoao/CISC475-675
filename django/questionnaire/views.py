@@ -11,8 +11,19 @@ from django.urls import reverse_lazy
 def index(request):
     return HttpResponse("You're looking at question.")
 
-def entry(request):
-    
+
+@login_required(login_url=reverse_lazy('questionnaire:login'))
+def entryView(request, patient_id):
+    today = timezone.now()
+    context = {'weekly': False, 'monthly': False, 'patient_id': patient_id}
+    # Weekly questionnaire is answered every Friday. 
+    if today.weekday() == 5:
+        context['weekly'] = True
+    # Monthly questionnaire is answered at 1st-3rd every month.
+    if today.day <= 3:
+        context['monthly'] = True
+    return render(request, 'questionnaire/entry.html', context)
+
 
 @login_required(login_url=reverse_lazy('questionnaire:login'))
 def questionView(request, qid, patient_id):
@@ -107,8 +118,3 @@ def submitAnswers(request, qid, patient_id):
         context['error_msg'] = 'Form is invalid.'
 
     return render(request, template, context)
-
-
-@login_required(login_url=reverse_lazy('questionnaire:login'))
-def aboutView(request):
-    return render(request, 'questionnaire/about.html', {})
