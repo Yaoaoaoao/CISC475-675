@@ -11,6 +11,9 @@ from django.urls import reverse_lazy
 def index(request):
     return HttpResponse("You're looking at question.")
 
+def entry(request):
+    
+
 @login_required(login_url=reverse_lazy('questionnaire:login'))
 def questionView(request, qid, patient_id):
     context = {'questionnaire': None,
@@ -52,9 +55,7 @@ def submitAnswers(request, qid, patient_id):
              "error_msg": msg}
     """
     template = 'questionnaire/submit.html'
-    # submit_date = timezone.now()
-    from datetime import timedelta
-    submit_date = timezone.now() - timedelta(9)
+    submit_date = timezone.now()
     context = {
         'patient_id': patient_id,
         'submit_date': submit_date,
