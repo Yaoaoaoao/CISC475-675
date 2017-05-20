@@ -14,12 +14,13 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Bundle bundle = getIntent().getExtras();
+        String patient_id = bundle.getString("id");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         Button refresh = (Button) findViewById(R.id.refresh);
 
         final WebView myWebView = (WebView) findViewById(R.id.webView1);
-        myWebView.loadUrl("http://10.0.2.2:8000/questionnaire/2/patient_id/10086");
+        myWebView.loadUrl("http://10.0.2.2:8000/questionnaire/2/patient_id/"+patient_id+"");
         myWebView.clearHistory();
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);

@@ -3,10 +3,9 @@ package edu.udel.liyiluan.returntosport;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Context;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -25,17 +24,14 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static edu.udel.liyiluan.returntosport.R.id.patientID;
-import static junit.runner.BaseTestRunner.savePreferences;
 
-/**
- * A login screen that offers login via email/password.
- */
+
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     /**
@@ -80,6 +76,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
 
+        Button button = (Button) findViewById(R.id.notification_button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.HOUR_OF_DAY,13);
+                calendar.set(Calendar.MINUTE,00);
+                Intent intent = new Intent(getApplicationContext(),NotificationReceiver.class);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),10,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),alarmManager.INTERVAL_DAY,pendingIntent);
+            }
+        });
+
     }
 
 
@@ -108,10 +119,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mPatientIDView.setError(getString(R.string.error_field_required));
             focusView = mPatientIDView;
             cancel = true;
-        } else if (!isIDValid(patientID)) {
-            mPatientIDView.setError(getString(R.string.error_invalid_email));
-            focusView = mPatientIDView;
-            cancel = true;
         }
 
         if (cancel) {
@@ -122,8 +129,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
+            String id = mPatientIDView.getText().toString();
+
             Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+            myIntent.putExtra("id", id);
+            myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
             LoginActivity.this.startActivity(myIntent);
+            this.finish();
             //mAuthTask.execute((Void) null);
         }
     }
@@ -229,11 +242,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mPatientID;
-
-        UserLoginTask(String patientID) {
-            mPatientID = patientID;
-        }
 
         @Override
         protected Boolean doInBackground(Void... params) {
@@ -254,8 +262,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-            LoginActivity.this.startActivity(myIntent);
 
         }
 
