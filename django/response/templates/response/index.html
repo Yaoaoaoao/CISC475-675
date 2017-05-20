@@ -1,0 +1,15 @@
+{% extends "questionnaire/base.html" %}
+
+{% block body %}
+<div style="padding:20px;">
+    <h3> Admin views <small> (superuser required)</small></h3>
+    <p><a href="/admin"> Admin page </a></p>
+    <p><a href="{% url 'response:view' %}"> Patient response view </a></p>
+    <p><a href="{% url 'response:track' %}"> Severity score chart </a></p>
+    
+    <h3> Patient views</h3>
+    <p><a href="{% url 'questionnaire:view' 1 0 %}"> Questionnaire 1 </a></p>
+    <p><a href="{% url 'questionnaire:view' 2 0 %}"> Questionnaire 2 </a></p>
+    
+</div>
+{% endblock %}
