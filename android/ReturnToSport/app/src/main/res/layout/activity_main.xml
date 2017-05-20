@@ -23,7 +23,7 @@
             android:layout_width="84dp"
             android:layout_height="48dp"
             android:text="refresh"
-            android:backgroundTint="@color/colorAccent"
+            android:backgroundTint="@color/colorAccent2"
             android:layout_gravity="right"
             android:fontFamily="Open Sans"
             />
